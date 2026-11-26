@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CineScope 🎬
 
-## Getting Started
+**CineScope** es una aplicación web de exploración cinematográfica desarrollada con Next.js 16, TypeScript y Tailwind CSS. Permite descubrir películas, consultar información detallada, realizar búsquedas, explorar géneros y guardar películas favoritas.
 
-First, run the development server:
+El proyecto fue desarrollado como actividad académica del programa **Full Stack Jr. de KODIGO**, utilizando inteligencia artificial como copiloto mediante un proceso de Vibe Coding.
+
+## Enlaces
+
+- **Aplicación:** https://cinescope-nu-fawn.vercel.app/
+- **Repositorio:** https://github.com/KarenSSanchezP/cinescope
+- **Documentación del desarrollo:** [VIBE_CODING.md](./VIBE_CODING.md)
+
+## Funcionalidades
+
+- Exploración de películas populares mediante TMDB API.
+- Búsqueda de películas por título.
+- Filtrado de películas por género.
+- Consulta de fichas con información cinematográfica.
+- Gestión de favoritos con persistencia en `localStorage`.
+- Diseño responsive para móviles y computadoras.
+- Manejo de estados de carga, errores y resultados vacíos.
+
+## Tecnologías utilizadas
+
+| Tecnología | Propósito |
+|---|---|
+| Next.js 16 | Framework y App Router |
+| React 19 | Componentes e interactividad |
+| TypeScript | Tipado estático |
+| Tailwind CSS 4 | Estilos y diseño responsive |
+| TMDB API v3 | Información cinematográfica |
+| Git y GitHub | Control de versiones |
+| Vercel | Despliegue en producción |
+| ChatGPT | Asistencia de desarrollo mediante IA |
+
+## Instalación local
+
+**Requisitos:** Node.js 20.9 o superior, npm y Git.
+
+1. Clonar el repositorio:
+
+```bash
+git clone https://github.com/KarenSSanchezP/cinescope.git
+cd cinescope
+```
+
+2. Instalar dependencias:
+
+```bash
+npm install
+```
+
+3. Crear `.env.local` en la raíz del proyecto, tomando como referencia `.env.example`:
+
+```env
+TMDB_ACCESS_TOKEN=tu_token_de_lectura
+```
+
+El token se obtiene desde https://www.themoviedb.org/settings/api.
+
+4. Iniciar el servidor:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Abrir http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Seguridad:** El archivo `.env.local` contiene credenciales privadas y no debe publicarse en GitHub.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rutas principales
 
-## Learn More
+| Ruta | Descripción |
+|---|---|
+| `/` | Inicio y películas populares |
+| `/discover` | Exploración por género |
+| `/search` | Búsqueda de películas |
+| `/movies/[id]` | Detalles de una película |
+| `/favorites` | Colección de favoritos |
 
-To learn more about Next.js, take a look at the following resources:
+La aplicación también incluye Route Handlers para consumir TMDB desde el servidor sin exponer el token de acceso.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Validación
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+El proyecto fue comprobado localmente mediante:
 
-## Deploy on Vercel
+```bash
+npx tsc --noEmit
+npm run lint
+npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Las tres comprobaciones finalizaron sin errores tras las correcciones realizadas durante el desarrollo.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Vibe Coding
+
+CineScope fue desarrollado mediante iteraciones guiadas por ChatGPT, incluyendo generación de código, revisión técnica, depuración, validación y control de versiones.
+
+Los prompts principales, decisiones técnicas, problemas y soluciones se documentan en [VIBE_CODING.md](./VIBE_CODING.md).
+
+## Despliegue
+
+La aplicación está desplegada en **Vercel**.
+
+**URL:** https://cinescope-nu-fawn.vercel.app/
+
+La variable `TMDB_ACCESS_TOKEN` se configura en el entorno del proyecto en Vercel.
+
+## Créditos y atribución
+
+Este producto utiliza la API de TMDB, pero no está respaldado ni certificado por TMDB.
+
+*This product uses the TMDB API but is not endorsed or certified by TMDB.*
+
+Los datos e imágenes cinematográficas se obtienen de [The Movie Database (TMDB)](https://www.themoviedb.org/).
+
+## Autoría
+
+Proyecto académico individual desarrollado para el programa Full Stack Jr. de KODIGO.
+
+**GitHub:** [KarenSSanchezP](https://github.com/KarenSSanchezP)

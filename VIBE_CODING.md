@@ -2,11 +2,13 @@
 
 ## Descripción del proyecto
 
-CineScope es una aplicación web de exploración cinematográfica desarrollada con **Next.js 16, TypeScript y Tailwind CSS**, utilizando la API de TMDB para consultar películas.
+CineScope es una aplicación web de exploración cinematográfica desarrollada con **Next.js 16, TypeScript y Tailwind CSS**, utilizando TMDB API para consultar información de películas.
 
-El proyecto utiliza **ChatGPT como copiloto de desarrollo**, siguiendo un proceso iterativo de generación de código, revisión, corrección de errores y validación.
+El proyecto utiliza **ChatGPT como copiloto de desarrollo**, mediante un proceso iterativo de generación de código, revisión técnica, corrección de errores y validación.
 
 **Repositorio:** https://github.com/KarenSSanchezP/cinescope
+
+**Aplicación:** https://cinescope-nu-fawn.vercel.app/
 
 ---
 
@@ -14,9 +16,14 @@ El proyecto utiliza **ChatGPT como copiloto de desarrollo**, siguiendo un proces
 
 **Objetivo:** Configurar Next.js 16 con App Router, TypeScript, Tailwind CSS y GitHub.
 
-**Prompt principal:** Se solicitó a ChatGPT orientar la creación del proyecto desde cero, priorizando una arquitectura limpia, componentes reutilizables y buenas prácticas.
+### Prompt principal
+
+> Actúa como Senior Frontend Engineer especializado en Next.js 16+, TypeScript, React y Tailwind CSS. Vamos a construir desde cero CineScope, una aplicación de exploración cinematográfica. Guíame paso a paso para inicializar el proyecto, configurar las tecnologías, organizar el repositorio y verificar que el entorno funcione correctamente. Trabajaremos por iteraciones, validando cada etapa antes de continuar.
+
+*Prompt representativo de las instrucciones iniciales.*
 
 **Actividades realizadas:**
+
 - Creación del repositorio público en GitHub.
 - Inicialización mediante `create-next-app`.
 - Configuración y validación del entorno.
@@ -36,9 +43,12 @@ El proyecto utiliza **ChatGPT como copiloto de desarrollo**, siguiendo un proces
 
 **Objetivo:** Crear la identidad visual de CineScope y una portada responsive.
 
-**Prompt principal:** Se solicitó una interfaz editorial cinematográfica, con negro obsidiana, marfil, rojo óxido, tipografía serif y componentes reutilizables.
+### Prompt principal
+
+> Implementar la identidad visual de CineScope con Next.js 16, TypeScript y Tailwind CSS, utilizando una estética editorial cinematográfica con negro obsidiana, marfil, rojo óxido y tipografía serif. Crear componentes reutilizables para encabezado y pie de página, así como una portada responsive, sin integrar todavía TMDB.
 
 **Decisiones técnicas:**
+
 - Variables CSS para colores y estilos globales.
 - Server Components para elementos estáticos.
 - Componentes independientes para encabezado y pie de página.
@@ -57,9 +67,14 @@ El proyecto utiliza **ChatGPT como copiloto de desarrollo**, siguiendo un proces
 
 **Objetivo:** Consultar películas populares desde TMDB y mostrarlas en la página principal.
 
-**Prompt principal:** Se solicitó integrar TMDB API v3 mediante servicios de servidor, interfaces TypeScript, componentes reutilizables, Route Handlers y manejo de estados de carga y error.
+### Prompt principal
+
+> Integra TMDB API v3 en CineScope para consultar películas populares y mostrarlas en la página principal. Utiliza TypeScript para definir los modelos de datos, centraliza las solicitudes HTTP, protege el token mediante variables de entorno y crea componentes reutilizables. Implementa un Route Handler interno, estados de carga con Suspense y manejo de errores. Conserva la identidad visual existente.
+
+*Prompt reconstruido a partir de los requisitos de la iteración.*
 
 **Decisiones técnicas:**
+
 - Token protegido mediante `.env.local`.
 - Solicitudes centralizadas en `src/lib/tmdb.ts`.
 - Endpoint interno `/api/movies/popular`.
@@ -70,15 +85,15 @@ El proyecto utiliza **ChatGPT como copiloto de desarrollo**, siguiendo un proces
 
 **1. Error de ESLint: `react-hooks/error-boundaries`**
 
-El código generado por IA construía JSX dentro de `try/catch`.
+La IA generó JSX dentro de un bloque `try/catch`.
 
-**Solución:** Se separó la consulta a TMDB del renderizado de componentes, manteniendo los estados de error, vacío y éxito fuera del bloque `try/catch`.
+**Solución:** Se separó la consulta a TMDB del renderizado de componentes, colocando los estados de error, vacío y éxito fuera del bloque.
 
 **2. Error de conexión con TMDB (502)**
 
-Durante el build, una solicitud a TMDB falló.
+Durante una compilación, una solicitud a TMDB falló.
 
-**Solución:** Se realizaron pruebas con `Test-NetConnection`, `curl.exe` y `fetch()` de Node.js. Posteriormente, el endpoint interno respondió HTTP 200. La causa exacta del fallo inicial no se determinó.
+**Solución:** Se realizaron pruebas mediante `Test-NetConnection`, `curl.exe` y `fetch()` de Node.js. Posteriormente, el endpoint interno respondió HTTP 200. No se determinó la causa exacta del fallo inicial.
 
 **3. Error de prerenderizado: `Date.now()`**
 
@@ -88,69 +103,95 @@ Next.js 16 detectó una operación temporal inestable durante el prerenderizado 
 
 ### Resultado
 
-- Conexión autenticada con TMDB funcionando.
+- Autenticación con TMDB funcionando.
 - Endpoint interno respondiendo HTTP 200.
-- Películas reales mostradas con pósteres, títulos, años y calificaciones.
+- Películas reales mostradas con pósteres y calificaciones.
 - Error de prerenderizado corregido.
+- Integración validada localmente.
 
-**Validación final:** Pendiente de confirmar con TypeScript, ESLint y build después de las correcciones.
+**Commit:** `d332aa7`
 
-**Commit:** `d332aa7`.
+---
 
-## Iteración 04 — Implementación de funcionalidades del MVP
+## Iteración 04 — Funcionalidades del MVP
 
-**Objetivo:** Completar las funcionalidades principales de CineScope mediante nuevas rutas, búsqueda de películas, filtros por género y gestión de favoritos.
+**Objetivo:** Completar las rutas y funcionalidades principales de CineScope.
 
-**Prompt principal:** Se solicitó a ChatGPT implementar las funcionalidades restantes de CineScope con Next.js 16 y TypeScript, reutilizando la integración con TMDB, manteniendo la identidad visual y cumpliendo los requisitos técnicos de la actividad.
+### Prompt principal
+
+> Completemos las funcionalidades restantes de CineScope en una sola iteración, priorizando los requisitos de la actividad. Implementa detalles de películas mediante rutas dinámicas, búsqueda por título, exploración con filtros por género y una sección de favoritos. Reutiliza la integración con TMDB, conserva el diseño actual e incluye Client Components, useState, useEffect y manejo de errores. Necesitamos terminar el proyecto en el tiempo disponible.
+
+*Prompt representativo de la solicitud de completar el MVP en aproximadamente una hora.*
 
 **Funcionalidades implementadas:**
-- Ruta dinámica `/movies/[id]` para consultar detalles de películas.
-- Página `/discover` con exploración y filtros por género.
-- Página `/search` para buscar películas por título.
-- Página `/favorites` para administrar películas favoritas.
-- Persistencia de favoritos mediante `localStorage`.
-- Uso de Client Components con `useState` y `useEffect`.
-- Route Handlers para consultar TMDB desde el servidor.
-- Manejo de estados de carga, errores y resultados vacíos.
+
+- Ruta `/movies/[id]` para detalles de películas.
+- Página `/discover` con filtros por género.
+- Página `/search` para búsqueda por título.
+- Página `/favorites` con almacenamiento local.
+- Client Components con `useState` y `useEffect`.
+- Route Handlers y estados de carga, errores y resultados vacíos.
 
 **Decisiones técnicas:**
-- Reutilizar los servicios y componentes existentes.
-- Mantener el token de TMDB protegido en `.env.local`.
-- Utilizar rutas dinámicas mediante App Router.
-- Almacenar los favoritos localmente para evitar una base de datos innecesaria.
-- Conservar el diseño responsive y los estilos de CineScope.
+
+- Reutilizar servicios y componentes existentes.
+- Mantener las credenciales exclusivamente en el servidor.
+- Utilizar App Router para las rutas.
+- Implementar favoritos mediante `localStorage`, sin base de datos adicional.
 
 ### Problema encontrado y solución
 
-**1. Error de prerenderizado: `new Date()`**
+**Error de prerenderizado: `new Date()`**
 
-Next.js 16 detectó un valor temporal inestable en `SiteFooter.tsx`, debido al uso de `new Date().getFullYear()`.
+Next.js detectó un valor temporal inestable en `SiteFooter.tsx`, que impedía completar el build de producción.
 
-El error afectaba varias rutas y provocaba que `npm run build` fallara durante la generación de páginas.
-
-**Solución:** Se reemplazó el cálculo dinámico del año por el valor estático `2026`. También se agregó `data-scroll-behavior="smooth"` al elemento `<html>` para resolver una advertencia de navegación.
+**Solución:** Se reemplazó `new Date().getFullYear()` por el valor estático `2026`. También se agregó `data-scroll-behavior="smooth"` al elemento `<html>` para resolver una advertencia de navegación.
 
 ### Resultado
 
-- Cinco páginas o rutas de interfaz implementadas.
-- Consulta de detalles de películas funcionando.
-- Búsqueda y filtros por género funcionando.
-- Gestión de favoritos implementada.
-- Endpoints internos respondiendo correctamente.
-- Error de prerenderizado corregido.
-- Validaciones `npx tsc --noEmit`, `npm run lint` y `npm run build` completadas exitosamente.
+- Cinco rutas de interfaz implementadas.
+- Búsqueda, filtros, detalles y favoritos funcionando localmente.
+- Errores de prerenderizado corregidos.
+- TypeScript, ESLint y build de producción exitosos.
 
-**Commit:** Pendiente de registrar.
+**Commit:** `b0e88e3`
+
+---
+
+## Iteración 05 — Despliegue y entrega
+
+**Objetivo:** Publicar CineScope en Vercel y preparar los entregables finales.
+
+### Prompt principal
+
+> Continuemos con la publicación de CineScope. Guíame para desplegar la aplicación en Vercel desde el repositorio de GitHub, configurar correctamente la variable de entorno de TMDB y verificar que las páginas funcionen en producción. También necesitamos actualizar README.md y VIBE_CODING.md para dejar el proyecto listo para entregar.
+
+*Prompt representativo de las solicitudes de despliegue y revisión documental.*
+
+**Actividades realizadas:**
+
+- Publicación del MVP en GitHub.
+- Importación del repositorio en Vercel.
+- Configuración de `TMDB_ACCESS_TOKEN` en el entorno de despliegue.
+- Ejecución de la compilación de producción.
+- Obtención de una URL pública.
+
+**Resultado:** Vercel confirmó el despliegue en estado `READY`, correspondiente al commit `b0e88e3`.
+
+**Validación final:** Se comprobó el acceso público a CineScope mediante una ventana InPrivate de Microsoft Edge, sin necesidad de iniciar sesión. Asimismo, se verificó el funcionamiento de las rutas principales, la búsqueda de películas, los filtros por género, las fichas de detalles y la gestión de favoritos en producción.
+
+**URL:** https://cinescope-nu-fawn.vercel.app/
 
 ---
 
 ## Lecciones aprendidas
 
 - El código generado por IA debe revisarse y validarse antes de utilizarse.
-- Separar la lógica de datos de los componentes visuales facilita el mantenimiento.
-- Una compilación exitosa no garantiza que las API externas funcionen.
-- Las herramientas de depuración permiten identificar y corregir problemas reales.
-- Next.js 16 requiere comprender el comportamiento de `Suspense`, Cache Components y el prerenderizado.
+- Separar los datos de la presentación facilita el mantenimiento.
+- Una compilación exitosa no garantiza el funcionamiento de una API externa.
+- La depuración mediante pruebas ayuda a identificar problemas reales.
+- Next.js 16 requiere comprender `Suspense`, Cache Components y el prerenderizado.
+- Git permite evidenciar el desarrollo iterativo y las correcciones realizadas.
 
 ---
 
@@ -159,11 +200,9 @@ El error afectaba varias rutas y provocaba que `npm run build` fallara durante l
 | Iteración | Estado |
 |---|---|
 | 01. Inicialización | Completada |
-| 02. Identidad visual | Completada |
-| 03. Integración TMDB | Validación final pendiente |
-| 04. Detalles de películas | Pendiente |
-| 05. Búsqueda y filtros | Pendiente |
-| 06. Favoritos | Pendiente |
-| 07. Pruebas y despliegue | Pendiente |
+| 02. Diseño de interfaz | Completada |
+| 03. Integración TMDB | Completada |
+| 04. Funcionalidades del MVP | Completada |
+| 05. Despliegue y entrega | Completada |
 
-*Este documento se actualizará conforme avance el desarrollo de CineScope.*
+**Nota metodológica:** Se documentan las instrucciones principales utilizadas durante el desarrollo. Algunos prompts se presentan como reconstrucciones representativas, conservando los requisitos y objetivos originales. Los resultados, errores y correcciones corresponden al proceso real de implementación.
