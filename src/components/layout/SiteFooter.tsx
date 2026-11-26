@@ -1,24 +1,27 @@
-import { Suspense } from "react";
-import { connection } from "next/server";
-
-async function CurrentYear() {
-    await connection();
-    return new Date().getFullYear();
-}
+import Link from "next/link";
 
 export function SiteFooter() {
-    return (
-        <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-7 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
-            <p>
-            © <Suspense fallback="----"><CurrentYear /></Suspense> CineScope.
-            {" "}Una nueva forma de descubrir cine.
-            </p>
+  return (
+    <footer className="border-t border-border">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-7 text-xs text-muted sm:px-8 lg:px-12">
+        <p>
+          © 2026 CineScope. Descubre tu próxima película.
+        </p>
 
-            <p className="uppercase tracking-[0.12em]">
-            Crafted with Next.js & TypeScript
-            </p>
-        </div>
-        </footer>
-    );
+        <p>
+          This product uses the TMDB API but is not
+          endorsed or certified by TMDB.
+        </p>
+
+        <Link
+          href="https://www.themoviedb.org/"
+          className="text-highlight underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Información proporcionada por TMDB
+        </Link>
+      </div>
+    </footer>
+  );
 }

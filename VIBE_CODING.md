@@ -95,7 +95,52 @@ Next.js 16 detectó una operación temporal inestable durante el prerenderizado 
 
 **Validación final:** Pendiente de confirmar con TypeScript, ESLint y build después de las correcciones.
 
-**Commit:** Pendiente de realizar.
+**Commit:** `d332aa7`.
+
+## Iteración 04 — Implementación de funcionalidades del MVP
+
+**Objetivo:** Completar las funcionalidades principales de CineScope mediante nuevas rutas, búsqueda de películas, filtros por género y gestión de favoritos.
+
+**Prompt principal:** Se solicitó a ChatGPT implementar las funcionalidades restantes de CineScope con Next.js 16 y TypeScript, reutilizando la integración con TMDB, manteniendo la identidad visual y cumpliendo los requisitos técnicos de la actividad.
+
+**Funcionalidades implementadas:**
+- Ruta dinámica `/movies/[id]` para consultar detalles de películas.
+- Página `/discover` con exploración y filtros por género.
+- Página `/search` para buscar películas por título.
+- Página `/favorites` para administrar películas favoritas.
+- Persistencia de favoritos mediante `localStorage`.
+- Uso de Client Components con `useState` y `useEffect`.
+- Route Handlers para consultar TMDB desde el servidor.
+- Manejo de estados de carga, errores y resultados vacíos.
+
+**Decisiones técnicas:**
+- Reutilizar los servicios y componentes existentes.
+- Mantener el token de TMDB protegido en `.env.local`.
+- Utilizar rutas dinámicas mediante App Router.
+- Almacenar los favoritos localmente para evitar una base de datos innecesaria.
+- Conservar el diseño responsive y los estilos de CineScope.
+
+### Problema encontrado y solución
+
+**1. Error de prerenderizado: `new Date()`**
+
+Next.js 16 detectó un valor temporal inestable en `SiteFooter.tsx`, debido al uso de `new Date().getFullYear()`.
+
+El error afectaba varias rutas y provocaba que `npm run build` fallara durante la generación de páginas.
+
+**Solución:** Se reemplazó el cálculo dinámico del año por el valor estático `2026`. También se agregó `data-scroll-behavior="smooth"` al elemento `<html>` para resolver una advertencia de navegación.
+
+### Resultado
+
+- Cinco páginas o rutas de interfaz implementadas.
+- Consulta de detalles de películas funcionando.
+- Búsqueda y filtros por género funcionando.
+- Gestión de favoritos implementada.
+- Endpoints internos respondiendo correctamente.
+- Error de prerenderizado corregido.
+- Validaciones `npx tsc --noEmit`, `npm run lint` y `npm run build` completadas exitosamente.
+
+**Commit:** Pendiente de registrar.
 
 ---
 
