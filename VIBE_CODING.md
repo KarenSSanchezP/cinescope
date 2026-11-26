@@ -1,68 +1,124 @@
-## Iteración 01 — Inicialización del entorno
+# CineScope — Registro de Vibe Coding
 
-**Objetivo:** Crear la estructura inicial de CineScope utilizando Next.js 16, TypeScript, Tailwind CSS y App Router, con un repositorio público en GitHub.
+## Descripción del proyecto
 
-**Herramienta de IA:** ChatGPT.
+CineScope es una aplicación web de exploración cinematográfica desarrollada con **Next.js 16, TypeScript y Tailwind CSS**, utilizando la API de TMDB para consultar películas.
 
-### Actividades realizadas
+El proyecto utiliza **ChatGPT como copiloto de desarrollo**, siguiendo un proceso iterativo de generación de código, revisión, corrección de errores y validación.
 
-- Creación y clonación del repositorio público.
-- Inicialización mediante `create-next-app`.
-- Instalación de Next.js 16.4.6 y React 19.3.0.
-- Verificación de la configuración de Git.
-- Ejecución de comprobaciones de TypeScript y ESLint.
-- Ejecución del servidor local y comprobación de la respuesta HTTP 200.
-
-**Dificultad encontrada:** El primer intento de inicialización detectó un conflicto con un archivo `README.md` existente.
-
-**Solución:** Se resolvió el conflicto y se repitió la inicialización dentro del repositorio.
-
-**Resultado:** Aplicación inicial de Next.js 16.4.6 funcionando localmente, sin errores de TypeScript ni ESLint. Compilación de producción exitosa y código publicado en GitHub.
-
-### Commit realizado 
-
-`chore: inicializar Next.js 16 con TypeScript y Tailwind CSS` - (`ee788f1`).
+**Repositorio:** https://github.com/KarenSSanchezP/cinescope
 
 ---
 
-## Iteración 02 — Identidad visual e interfaz base
+## Iteración 01 — Inicialización del proyecto
 
-**Objetivo:** Implementar una portada editorial cinematográfica, un sistema de diseño reutilizable y un layout responsive.
+**Objetivo:** Configurar Next.js 16 con App Router, TypeScript, Tailwind CSS y GitHub.
 
-**Herramienta de IA:** ChatGPT.
+**Prompt principal:** Se solicitó a ChatGPT orientar la creación del proyecto desde cero, priorizando una arquitectura limpia, componentes reutilizables y buenas prácticas.
 
-### Prompt utilizado
+**Actividades realizadas:**
+- Creación del repositorio público en GitHub.
+- Inicialización mediante `create-next-app`.
+- Configuración y validación del entorno.
+- Ejecución de TypeScript, ESLint y build de producción.
 
-Implementar la identidad visual de CineScope con Next.js 16, TypeScript y Tailwind CSS, utilizando una estética editorial cinematográfica con negro obsidiana, marfil, rojo óxido y tipografía serif. Crear componentes reutilizables para encabezado y pie de página, así como una portada responsive, sin integrar todavía TMDB.
+**Problema:** El generador detectó un conflicto con el archivo `README.md` existente.
 
-### Decisiones técnicas
+**Solución:** Se resolvió el conflicto y se repitió la inicialización.
 
-- Definir tokens de diseño mediante variables CSS.
-- Utilizar Server Components en los componentes estáticos.
-- Crear componentes independientes para el encabezado y el pie de página.
-- Evitar librerías adicionales.
-- No crear enlaces hacia rutas que todavía no existen.
-- Utilizar elementos semánticos y mejoras de accesibilidad.
+**Resultado:** Proyecto funcionando localmente, sin errores de TypeScript ni ESLint y con compilación exitosa.
 
-### Archivos modificados
+**Commit:** `ee788f1`
 
-- `src/app/globals.css`
-- `src/app/layout.tsx`
-- `src/app/page.tsx`
+---
 
-### Archivos creados
+## Iteración 02 — Diseño de interfaz
 
-- `src/components/layout/SiteHeader.tsx`
-- `src/components/layout/SiteFooter.tsx`
+**Objetivo:** Crear la identidad visual de CineScope y una portada responsive.
 
-### Validación
+**Prompt principal:** Se solicitó una interfaz editorial cinematográfica, con negro obsidiana, marfil, rojo óxido, tipografía serif y componentes reutilizables.
 
-Pendiente de ejecutar las pruebas locales de TypeScript, ESLint, compilación y responsive.
+**Decisiones técnicas:**
+- Variables CSS para colores y estilos globales.
+- Server Components para elementos estáticos.
+- Componentes independientes para encabezado y pie de página.
+- Diseño responsive mediante Tailwind CSS.
+- HTML semántico y mejoras de accesibilidad.
 
-### Problemas y correcciones
+**Validación:** TypeScript, ESLint y build exitosos. Se verificó visualmente la interfaz en escritorio y móvil.
 
-Pendiente de registrar los resultados reales.
+**Resultado:** Portada funcional con identidad visual consistente y componentes reutilizables.
 
-### Commit previsto
+**Commit:** `1239b2b`
 
-`feat: implementar identidad visual y portada de CineScope`
+---
+
+## Iteración 03 — Integración con TMDB API
+
+**Objetivo:** Consultar películas populares desde TMDB y mostrarlas en la página principal.
+
+**Prompt principal:** Se solicitó integrar TMDB API v3 mediante servicios de servidor, interfaces TypeScript, componentes reutilizables, Route Handlers y manejo de estados de carga y error.
+
+**Decisiones técnicas:**
+- Token protegido mediante `.env.local`.
+- Solicitudes centralizadas en `src/lib/tmdb.ts`.
+- Endpoint interno `/api/movies/popular`.
+- Componentes `MovieCard` y `PopularMovies`.
+- Uso de `Suspense` para la carga de datos.
+
+### Problemas encontrados y soluciones
+
+**1. Error de ESLint: `react-hooks/error-boundaries`**
+
+El código generado por IA construía JSX dentro de `try/catch`.
+
+**Solución:** Se separó la consulta a TMDB del renderizado de componentes, manteniendo los estados de error, vacío y éxito fuera del bloque `try/catch`.
+
+**2. Error de conexión con TMDB (502)**
+
+Durante el build, una solicitud a TMDB falló.
+
+**Solución:** Se realizaron pruebas con `Test-NetConnection`, `curl.exe` y `fetch()` de Node.js. Posteriormente, el endpoint interno respondió HTTP 200. La causa exacta del fallo inicial no se determinó.
+
+**3. Error de prerenderizado: `Date.now()`**
+
+Next.js 16 detectó una operación temporal inestable durante el prerenderizado de `PopularMovies`.
+
+**Solución:** Se incorporó `await connection()` desde `next/server`, manteniendo el componente dentro de `Suspense`.
+
+### Resultado
+
+- Conexión autenticada con TMDB funcionando.
+- Endpoint interno respondiendo HTTP 200.
+- Películas reales mostradas con pósteres, títulos, años y calificaciones.
+- Error de prerenderizado corregido.
+
+**Validación final:** Pendiente de confirmar con TypeScript, ESLint y build después de las correcciones.
+
+**Commit:** Pendiente de realizar.
+
+---
+
+## Lecciones aprendidas
+
+- El código generado por IA debe revisarse y validarse antes de utilizarse.
+- Separar la lógica de datos de los componentes visuales facilita el mantenimiento.
+- Una compilación exitosa no garantiza que las API externas funcionen.
+- Las herramientas de depuración permiten identificar y corregir problemas reales.
+- Next.js 16 requiere comprender el comportamiento de `Suspense`, Cache Components y el prerenderizado.
+
+---
+
+## Estado del proyecto
+
+| Iteración | Estado |
+|---|---|
+| 01. Inicialización | Completada |
+| 02. Identidad visual | Completada |
+| 03. Integración TMDB | Validación final pendiente |
+| 04. Detalles de películas | Pendiente |
+| 05. Búsqueda y filtros | Pendiente |
+| 06. Favoritos | Pendiente |
+| 07. Pruebas y despliegue | Pendiente |
+
+*Este documento se actualizará conforme avance el desarrollo de CineScope.*
